@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Face Detection Control</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      text-align: center;
+      padding: 50px;
+    }
+    h1 {
+      color: #333;
+    }
+    .toggle-btn {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>Face Recognition Detection</h1>
+  <p>Toggle Face Recognition for Browsing Security:</p>
+  <button id="toggleBtn" class="toggle-btn">Enable Face Recognition</button>
+
+  <script>
+    const toggleBtn = document.getElementById('toggleBtn');
+    let detectionEnabled = false;
+
+    toggleBtn.addEventListener('click', () => {
+      detectionEnabled = !detectionEnabled;
+      toggleBtn.textContent = detectionEnabled ? 'Disable Face Recognition' : 'Enable Face Recognition';
+
+      chrome.storage.local.set({ detectionEnabled: detectionEnabled });
+    });
+
+    chrome.storage.local.get(['detectionEnabled'], function (result) {
+      detectionEnabled = result.detectionEnabled;
+      toggleBtn.textContent = detectionEnabled ? 'Disable Face Recognition' : 'Enable Face Recognition';
+    });
+  </script>
+</body>
+</html>
